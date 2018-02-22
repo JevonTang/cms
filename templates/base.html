@@ -1,0 +1,47 @@
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{% include '_title.html' %}</title>
+
+  {# stylesheets #}
+  <link rel="stylesheet" href="{% static 'css/foundation.css' %}"/>
+  {% render_block 'css' %}
+  {% block extrahead %}{% endblock extrahead %}
+  <link rel="stylesheet" href="{% static 'css/app.css' %}"/>
+</head>
+<body>
+  {% cms_toolbar %}
+
+  {# header #}
+  {% include '_header.html' %}
+
+  {# body #}
+  {% block body %}
+    <div class="row">
+      <div class="small-12 columns">
+        {% show_breadcrumb 0 '_breadcrumbs.html' %}
+        {% block content %}
+          <h1>{{ request.current_page.get_title }}</h1>
+          {% placeholder 'content' %}
+        {% endblock content %}
+      </div>
+    </div>
+  {% endblock body %}
+
+  {# footer #}
+  {% include '_footer.html' %}
+
+  {# javascripts #}
+  {% render_block 'js' %}
+  <script type="text/javascript" src="{% static 'js/vendor/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/vendor/foundation.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+  {% block extrabody %}{% endblock extrabody %}
+</body>
+</html>
